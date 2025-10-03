@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carta para ti</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f7e9f0;
+      text-align: center;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* Primera pantalla (carta) */
+    #carta {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s ease;
+    }
+    #carta.oculto {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Animación de escribir */
+    h1 {
+      color: #c2185b;
+      font-size: 2rem;
+      font-weight: bold;
+      overflow: hidden;              
+      border-right: .15em solid #c2185b; 
+      white-space: nowrap;           
+      width: 0;                      
+      animation: typing 3s steps(25, end) forwards, blink 0.7s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    button {
+      margin-top: 20px;
+      background: #c2185b;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #a3154a;
+    }
+
+    /* Contenedor del video */
+    #videoBox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: none;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: all 1s ease;
+      z-index: 10;
+    }
+    #videoBox.mostrar {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* llena la pantalla */
+    }
+  </style>
+</head>
+<body>
+  <!-- Primera vista -->
+  <div id="carta">
+    <h1>💌 Te llegó una carta 💌</h1>
+    <p>Haz clic abajo para abrirla</p>
+    <button onclick="abrirCarta()">Abrir</button>
+  </div>
+
+  <!-- Video a pantalla completa -->
+  <div id="videoBox">
+    <video autoplay muted playsinline controls>
+      <source src="parati.mp4" type="video/mp4">
+      Tu navegador no soporta reproducir el video.
+    </video>
+  </div>
+
+  <script>
+    function abrirCarta() {
+      const carta = document.getElementById("carta");
+      const videoBox = document.getElementById("videoBox");
+      
+      // Ocultar carta
+      carta.classList.add("oculto");
+      
+      // Mostrar video después del fade
+      setTimeout(() => {
+        carta.style.display = "none";
+        videoBox.style.display = "block";
+        setTimeout(() => {
+          videoBox.classList.add("mostrar");
+        }, 50);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
